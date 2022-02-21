@@ -3,7 +3,7 @@
 
 int main(void)
 {
-    // create varibles
+    // create variables
     long number;
     int digit;
     int length = 0;
@@ -13,6 +13,7 @@ int main(void)
     long last_digit;
     int final_sum; // Adding the sum of digits not multiplied by 2.
     long first_digit;
+    long first_two_digits;
     bool valid;
 
     // Ask user to input credit card number
@@ -22,29 +23,37 @@ int main(void)
     }
     while (number <= 0);
 
+    // set variables to equal number
+    first_two_digits = number;
     first_digit = number;
     last_digit = number;
 
-    // Get the first digit of number and store in variable first_digit
-    while(first_digit >= 10){
+    // Get the first digit
+    while (first_digit >= 10)
+    {
         first_digit /= 10;
     }
 
-    while(last_digit >= 10){
-        last_digit = last_digit % 10; // take last digit and store in variable.
+    // Get the last digit
+    while (last_digit >= 10)
+    {
+        last_digit = last_digit % 10;
     }
 
-    //printf("last_number: %li\n", last_digit);
-    //printf("number:: %li\n", number);
+    // Get the first two digits
+    while (first_two_digits > 100)
+    {
+        first_two_digits /= 10;
+    }
 
     // Luhn algorithm for checksum
-    while(number != 0)
+    while (number != 0)
     {
         digit = (number / 10) % 10; // start at second-to-last
         number /= 10;
 
         // If odd or even multiply and add or just add.
-        if(position % 2 == parity)
+        if (position % 2 == parity)
         {
 
             digit = digit * 2; // take each digit and multiply by 2
@@ -54,37 +63,41 @@ int main(void)
             {
                 digit = digit - 9;
             }
-            sum = sum + digit; // get sum
+            sum = sum + digit; // get sum of numbers multiplied
         }
 
-        if(position % 2 != parity)
+        if (position % 2 != parity)
         {
-            sum = sum + digit;
+            sum = sum + digit; // get sum of numbers added
         }
 
         final_sum = sum + last_digit; // add both sums together
-        position++; // loop
+        position++; // loop position and length
         length++;
     }
-    //printf("final_sum: %i\n", final_sum);
 
     // Check if sum ends in zero
     valid = final_sum % 10 == 0;
-   // printf("valid: %d\n", valid);
 
-
-    if(first_digit == 4 && length >= 13 && length <= 16 && valid){
+    // if first_digit is 4, and length is between 13 and 16  and checksum ends in zero - print VISA.
+    if (first_digit == 4 && length >= 13 && length <= 16 && valid)
+    {
         printf("VISA\n");
-    } else if (length == 15 && valid) {
+    }
+    // if first two digits are 37 or 37, length is 15 and checksum ends in zero - print AMEX/
+    else if ((first_two_digits == 34 || first_two_digits == 37) && length == 15 && valid)
+    {
         printf("AMEX\n");
-    } else if(length == 16 && valid){
+    }
+    // if first two digits are between 51 and 55, length is 16 and checksum equals zero - print MASTERCARD
+    else if (first_two_digits >= 51 && first_two_digits <= 55 && length == 16 && valid)
+    {
         printf("MASTERCARD\n");
-    } else {
+    }
+    // if no cases are matched - print INVALID
+    else
+    {
         printf("INVALID\n");
     }
 
-
 }
-
-
-
