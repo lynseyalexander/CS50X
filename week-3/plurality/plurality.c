@@ -117,7 +117,7 @@ void print_winner(void)
         int candidate_votes = candidates[voteCount].votes;
         string candidate_name = candidates[voteCount].name;
 
-        // if an candidates have an equal amount of votes set in the
+        // if any candidates have an equal amount of votes set in the
         // winningVote variable then print the candidates name followed by \n
         if (candidate_votes == winningVote)
         {
